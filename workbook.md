@@ -569,7 +569,7 @@ export default MyComponent;
 
 * Unit testing is designed to test individual units or components, isolated from the rest of the application.
 
-:question: **56 What does `mocking` mean from a testing perspective ? Give an example when you would use it.**
+:question: **56 What does `mocking` mean from a testing perspective? Give an example when you would use it.**
 
 * When testing, mocking means to create a simulated version for the data that the code we want to test relies on.
 * A frequent example of recently used mocking was to add data to see it create-read-update-delete operations work as expected.
@@ -684,6 +684,7 @@ export default DestroyedComponent;
   useEffect(() => {
     setCount((count) => count + 1); //increment this Hook
   }); //no dependency array.
+
   return (
     <div className="App">
       <p> value of count: {count} </p>
@@ -779,28 +780,71 @@ person.save((err, person) => {
 
 :question: **72 Write the code to delete from a mongo database all employees that are over 18 years. The scheme for an employee is `{name: string, age: int}`. You can ignore the part of connection parameters.**
 
+```
+db.employees.deleteMany({age: {$gt: 18}})  // $gt means greater than
+```
+
 :question: **73 Write the code to display in the console from a mongo database the employees who are over 18 years. The scheme for an employee is `{name: string, age: int}`. You can ignore the part of connection parameters.**
+
+```
+db.employees.find({age: {$gt: 18}}).forEach(function(employee) {
+  print(employee.name + " is over 18 years old");
+})
+```
 
 :question: **74 Write the code to update from a mongo database the employees with name='John' and set the new age to 8. The scheme for an employee is `{name: string, age: int}`. You can ignore the part of connection parameters.**
 
+```
+db.employees.updateMany({name: "John"}, {$set: {age: 8}})
+```
 
 ### Authentication (cookies + google)
 
 :question: **75 How to properly store passwords?**
 
-:question: **76 What is encryption and decryption?**
+* Passwords should not be stored in plain text, but should be stored in a database after being encrypted by a reversible algorithm (source: `Vaadata.com`).
+
+:question: **76 What are encryption and decryption?**
+
+* Encryption transforms a readable text into an unreadable form to prevent third-parties from reading it. (plaintext => encrypted text = cipher text)
+
+* Decryption transforms the encrypted text back into readable form. (encrypted text => plain text)
 
 :question: **77 What is hashing?**
 
+* Hashing is a technique generally used in cryptography to secure data by transforming it into a hash value/ digest that ususally is a fixed-size string of characters or numbers.
+
 :question: **78 What is OAuth2?**
+
+* OAuth2 (Open Authorization 2.0) is a standard meant to allow third-party websites or applications to access protected data from another web app on behalf of a user, without having access to the user's credentials.
 
 :question: **79 What is the difference between encryption and hashing? When would you use which?**
 
+* According to `EncryptionConsulting.com`, encryption is a two-way function where data is passed in as plaintext and comes out as ciphertext, which is unreadable. Since encryption is two-way, the data can be decrypted so it is readable again. Hashing, on the other hand, is one-way, meaning the plaintext is scrambled into a unique digest, through the use of a salt, that cannot be decrypted. 
+* We use encryption to protect confidentiality of data and we use hashing to protect integrity of data (detect unauthorized changes).
+
 :question: **80 How/where would you store sensitive data (like db password, API key, ...) of your application?**
+
+:black_nib: Some ways to store sensitive data:
+
+* [x] hidden in the project code
+
+* [x] in path for environmental variables that are set outside the app code
+
+* [x] hidden in configuration files
+
+* [x] encrypted - stored in a database and store the encyption key separately (in a key vault)
+
+* [x] key vaults (secret stores) on cloud
+
 
 :question: **81 What would you use a session for?**
 
+* According to `W3schools.com`, a session is a way to store information (in variables) to be used across multiple pages. Unlike a cookie, the information is not stored on the users computer.
+
 :question: **82 What would you use a cookie for?**
+
+* Cookies are used to store data about user's preferences or login credentials. There are generally two kinds of cookies: "persistent" cookies and "session" cookies. Some of the cookies purposes are: session management, personalization, analytics, advertising.
 
 ### Mern stack
 
@@ -830,4 +874,6 @@ app.use((req, res, next) => {
 ```
 
 :question: **87 What advantages does a developer have for using `bootstrap` or `material ui`?**
+
+* Using `bootstrap` or `material ui` helps developers save time, because they don't have to write the code from scratch using HTML, JS and CSS. Also, this helps maintain a consistent user interface across the application. Another advantage is that it is easy to adapt the interface to different devices and gadgets (tablet, mobile, pc, etc). 
 
